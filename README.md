@@ -77,3 +77,31 @@ elif response:
 - Requests, goes one step further in simplifying this process for us.
 - If you use response instance in a condition expression it will evaluate to True if the status code was between 200 and 400, and False otherwise.
 - Therefore, you can simplify the last example by rewriting the if statement.
+
+#### API for postcode.io
+```
+import requests
+
+url = "http://api.postcodes.io/postcodes/"
+postcode = "xxxxxx"
+
+url_arg = url + postcode
+print(url_arg)
+response = requests.get(url_arg)
+print(response.status_code)
+# print(response.content)
+# print(response.headers)
+# print(response.encoding.isdigit())
+# print(response.is_redirect)
+
+response_dict = response.json()
+response_keys = response_dict['result']
+print(type(response_dict))
+for keys in response_keys:
+    if keys == "postcode":
+        print("Your postcode locations is " + str(response_keys['postcode']))
+    if keys == "longitude":
+        print("Your longitude is " + str(response_keys["longitude"]))
+    elif keys == "latitude":
+        print("Your latitude is " + str(response_keys["latitude"]))
+```
